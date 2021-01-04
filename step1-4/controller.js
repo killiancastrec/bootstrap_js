@@ -2,9 +2,6 @@ const url = require('url');
 let fs = require('fs');
 
 exports.index = function (req, res) {
-    if (req.url === '/favicon.ico') {
-    return;
-    }
     console.log("Client Connected")
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
@@ -27,4 +24,18 @@ exports.index = function (req, res) {
           res.end();
     });
     console.log("Client Disconnected")
- }
+}
+ 
+exports.form = function (req, res) {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/html');
+  fs.readFile('./form.html', "utf-8", function (error, data) {
+    if (error) {
+      res.writeHead(404);
+      res.write('Whoops! File not found!');
+    } else {
+      res.write(data);
+    }
+    res.end();
+  });
+}
